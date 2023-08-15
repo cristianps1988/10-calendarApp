@@ -1,5 +1,12 @@
+import { addHours } from 'date-fns';
 import { useState } from 'react';
 import Modal from 'react-modal';
+import DatePicker, { registerLocale } from "react-datepicker";
+import es from 'date-fns/locale/es';
+
+import "react-datepicker/dist/react-datepicker.css";
+
+registerLocale('es', es)
 
 const customStyles = {
     content: {
@@ -15,6 +22,31 @@ const customStyles = {
 Modal.setAppElement('#root');
 
 export const CalendarModal = () => {
+
+    const [formValues, setformValues] = useState({
+        start: new Date(),
+        end: addHours(new Date(), 2),
+        asignatura: '',
+        semestre: '',
+        grupo: '',
+        docente: ''
+    })
+
+    console.log(formValues)
+
+    const onInputChange = ({ target }) => {
+        setformValues({
+            ...formValues,
+            [target.name]: target.value
+        })
+    }
+
+    const onDateChange = (event, type) => {
+        setformValues({
+            ...formValues,
+            [type]: event
+        })
+    }
 
     const [isOpen, setisOpen] = useState(true)
 
@@ -38,12 +70,29 @@ export const CalendarModal = () => {
                 <div className="d-flex justify-content-between">
                     <div className="form-group mb-2">
                         <label>Hora inicio</label>
-                        <input className="form-control" placeholder="Fecha inicio" />
+                        <DatePicker
+                            className="form-control"
+                            selected={formValues.start}
+                            onChange={(date) => onDateChange(date, 'start')}
+                            dateFormat='Pp'
+                            showTimeSelect
+                            locale='es'
+                            timeCaption='Hora'
+                        />
                     </div>
 
                     <div className="form-group mb-2">
                         <label>Hora fin</label>
-                        <input className="form-control" placeholder="Fecha inicio" />
+                        <DatePicker
+                            minDate={formValues.start}
+                            className="form-control"
+                            selected={formValues.end}
+                            onChange={(date) => onDateChange(date, 'end')}
+                            dateFormat='Pp'
+                            showTimeSelect
+                            locale='es'
+                            timeCaption='Hora'
+                        />
                     </div>
                 </div>
 
@@ -57,6 +106,8 @@ export const CalendarModal = () => {
                         placeholder="Asignatura"
                         name="asignatura"
                         autoComplete="off"
+                        value={formValues.asignatura}
+                        onChange={onInputChange}
                     />
                     {/* <small id="emailHelp" className="form-text text-muted">Asignatura a programar</small> */}
                 </div>
@@ -68,6 +119,8 @@ export const CalendarModal = () => {
                         placeholder="Semestre"
                         name="semestre"
                         autoComplete="off"
+                        value={formValues.semestre}
+                        onChange={onInputChange}
                     />
                     {/* <small id="emailHelp" className="form-text text-muted">Asignatura a programar</small> */}
                 </div>
@@ -79,6 +132,8 @@ export const CalendarModal = () => {
                         placeholder="Grupo"
                         name="grupo"
                         autoComplete="off"
+                        value={formValues.grupo}
+                        onChange={onInputChange}
                     />
                     {/* <small id="emailHelp" className="form-text text-muted">Asignatura a programar</small> */}
                 </div>
@@ -90,6 +145,8 @@ export const CalendarModal = () => {
                         placeholder="Docente"
                         name="docente"
                         autoComplete="off"
+                        value={formValues.docente}
+                        onChange={onInputChange}
                     />
                     {/* <small id="emailHelp" className="form-text text-muted">Asignatura a programar</small> */}
                 </div>
