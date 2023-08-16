@@ -1,10 +1,11 @@
-import { addHours } from 'date-fns';
+import { addHours, differenceInSeconds } from 'date-fns';
 import { useState } from 'react';
 import Modal from 'react-modal';
 import DatePicker, { registerLocale } from "react-datepicker";
 import es from 'date-fns/locale/es';
 
 import "react-datepicker/dist/react-datepicker.css";
+import Swal from 'sweetalert2';
 
 registerLocale('es', es)
 
@@ -32,8 +33,6 @@ export const CalendarModal = () => {
         docente: ''
     })
 
-    console.log(formValues)
-
     const onInputChange = ({ target }) => {
         setformValues({
             ...formValues,
@@ -54,6 +53,19 @@ export const CalendarModal = () => {
         setisOpen(false)
     }
 
+    const onSubmit = (event) => {
+        event.preventDefault()
+        const diference = differenceInSeconds(formValues.end, formValues.start)
+        if (isNaN(diference) || diference <= 0) {
+            Swal.fire('Fechas incorrectas', 'Revise las fechas ingresadas', 'error')
+        }
+        if (formValues.asignatura.length === 0 || formValues.semestre.length === 0 || formValues.grupo.length === 0 || formValues.docente.length === 0) {
+            Swal.fire('Campos vacios', 'Todos los campos son obligatorios', 'error')
+            return
+        }
+        console.log(formValues)
+    }
+
     return (
 
         <Modal
@@ -66,7 +78,9 @@ export const CalendarModal = () => {
         >
             <h1> Nuevo Horario </h1>
             <hr />
-            <form className="container">
+            <form className="container"
+                onSubmit={onSubmit}
+            >
                 <div className="d-flex justify-content-between">
                     <div className="form-group mb-2">
                         <label>Hora inicio</label>
