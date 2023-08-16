@@ -1,22 +1,16 @@
 import { Calendar } from 'react-big-calendar'
-import { addHours } from 'date-fns'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import { localizer, getMessagesES } from '../../helpers'
 
 import { Navbar, CalendarEventBox, CalendarModal } from "../"
 import { useState } from 'react'
+import { useUiStore, useCaledarStore } from '../../hooks'
 
-const myEventsList = [{
-    // title: 'clase',
-    start: new Date(),
-    end: addHours(new Date(), 2),
-    asignatura: 'Fisiología del ejercicio',
-    semestre: '3',
-    grupo: '301',
-    docente: 'Cristian Peña'
-}]
 
 export const CalendarPage = () => {
+
+    const { openDateModal } = useUiStore()
+    const { events, setActiveEvent } = useCaledarStore()
 
     const [lastView, setlastView] = useState(localStorage.getItem('lastView') || 'week') // esto también lo puedo quitar... también buscar la forma de ocultar el header 
 
@@ -34,11 +28,11 @@ export const CalendarPage = () => {
     }
 
     const onDoubleClick = (event) => {
-        console.log('Double Click:', event)
+        openDateModal()
     }
 
     const onSelected = (event) => {
-        console.log('Selected:', event)
+        setActiveEvent(event)
     }
 
     const onViewChanged = (event) => { // esto lo puedo quitar para mi app definitiva
@@ -54,7 +48,7 @@ export const CalendarPage = () => {
             <Calendar
                 culture='es'
                 localizer={localizer}
-                events={myEventsList}
+                events={events}
                 defaultView={lastView}
                 startAccessor="start"
                 endAccessor="end"
