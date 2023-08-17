@@ -10,7 +10,7 @@ import { Navbar, CalendarEventBox, CalendarModal, FabAddNew, FabDelete } from ".
 export const CalendarPage = () => {
 
     const { openDateModal } = useUiStore()
-    const { events, setActiveEvent } = useCaledarStore()
+    const { events, setActiveEvent, hasEventSelected } = useCaledarStore()
 
     const [lastView, setlastView] = useState(localStorage.getItem('lastView') || 'week') // esto también lo puedo quitar... también buscar la forma de ocultar el header 
 
@@ -64,7 +64,7 @@ export const CalendarPage = () => {
             />
             <CalendarModal />
             <FabAddNew />
-            <FabDelete />
+            {hasEventSelected && <FabDelete />}
         </>
     )
 }

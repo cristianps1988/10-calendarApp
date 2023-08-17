@@ -1,14 +1,17 @@
+import { useCaledarStore } from "../../hooks/useCaledarStore"
 
 export const FabDelete = () => {
 
-    const onClickNew = () => {
+    const { startDeletingEvent } = useCaledarStore()
 
+    const onClickDelete = () => {
+        startDeletingEvent()
     }
 
     return (
         <button
             className="btn btn-danger fab-danger"
-            onClick={onClickNew}
+            onClick={onClickDelete}
         >
             <i className="fas fa-trash-alt"></i>
         </button>

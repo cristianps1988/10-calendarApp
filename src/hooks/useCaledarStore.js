@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux"
-import { onSetActiveEvent, onAddNewEvent, onUpdateEvent } from "../store"
+import { onSetActiveEvent, onAddNewEvent, onUpdateEvent, onDeleteEvent } from "../store"
 
 
 export const useCaledarStore = () => {
@@ -21,14 +21,20 @@ export const useCaledarStore = () => {
         }
     }
 
+    const startDeletingEvent = () => {
+        dispatch(onDeleteEvent())
+    }
+
 
     return {
         // properties
         events,
         activeEvent,
+        hasEventSelected: !!activeEvent,
 
         //metodos
         setActiveEvent,
-        startSavingEvent
+        startSavingEvent,
+        startDeletingEvent,
     }
 }
