@@ -2,10 +2,11 @@ import { addHours, differenceInSeconds } from 'date-fns';
 import { useEffect, useState } from 'react';
 import Modal from 'react-modal';
 import DatePicker, { registerLocale } from "react-datepicker";
-import es from 'date-fns/locale/es';
-
 import "react-datepicker/dist/react-datepicker.css";
+
+import es from 'date-fns/locale/es';
 import Swal from 'sweetalert2';
+
 import { useUiStore } from '../../hooks/useUiStore';
 import { useCaledarStore } from '../../hooks';
 
@@ -27,7 +28,7 @@ Modal.setAppElement('#root');
 export const CalendarModal = () => {
 
     const { isDateModalOpen, closeDateModal } = useUiStore()
-    const { activeEvent } = useCaledarStore()
+    const { activeEvent, startSavingEvent } = useCaledarStore()
 
     const [formValues, setformValues] = useState({
         start: new Date(),
@@ -65,7 +66,7 @@ export const CalendarModal = () => {
         closeDateModal()
     }
 
-    const onSubmit = (event) => {
+    const onSubmit = async (event) => {
         event.preventDefault()
         const diference = differenceInSeconds(formValues.end, formValues.start)
         if (isNaN(diference) || diference <= 0) {
@@ -75,7 +76,8 @@ export const CalendarModal = () => {
             Swal.fire('Campos vacios', 'Todos los campos son obligatorios', 'error')
             return
         }
-        console.log(formValues)
+        await startSavingEvent(formValues)
+        closeDateModal()
     }
 
     return (
