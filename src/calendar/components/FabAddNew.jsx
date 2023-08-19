@@ -19,10 +19,10 @@ export const FabAddNew = () => {
         setActiveEvent({
             start: new Date(),
             end: addHours(new Date(), 2),
-            asignatura: '',
-            semestre: '',
-            grupo: '',
-            docente: ''
+            course: '',
+            semester: '',
+            group: '',
+            teacher: ''
         })
         openDateModal()
     }

@@ -33,10 +33,10 @@ export const CalendarModal = () => {
     const [formValues, setformValues] = useState({
         start: new Date(),
         end: addHours(new Date(), 2),
-        asignatura: '',
-        semestre: '',
-        grupo: '',
-        docente: ''
+        course: '',
+        semester: '',
+        group: '',
+        teacher: ''
     })
 
     useEffect(() => {
@@ -72,7 +72,7 @@ export const CalendarModal = () => {
         if (isNaN(diference) || diference <= 0) {
             Swal.fire('Fechas incorrectas', 'Revise las fechas ingresadas', 'error')
         }
-        if (formValues.asignatura.length === 0 || formValues.semestre.length === 0 || formValues.grupo.length === 0 || formValues.docente.length === 0) {
+        if (formValues.course.length === 0 || formValues.semester.length === 0 || formValues.group.length === 0 || formValues.teacher.length === 0) {
             Swal.fire('Campos vacios', 'Todos los campos son obligatorios', 'error')
             return
         }
@@ -132,9 +132,9 @@ export const CalendarModal = () => {
                         type="text"
                         className="form-control"
                         placeholder="Asignatura"
-                        name="asignatura"
+                        name="course"
                         autoComplete="off"
-                        value={formValues.asignatura}
+                        value={formValues.course}
                         onChange={onInputChange}
                     />
                     {/* <small id="emailHelp" className="form-text text-muted">Asignatura a programar</small> */}
@@ -145,9 +145,9 @@ export const CalendarModal = () => {
                         type="text"
                         className="form-control"
                         placeholder="Semestre"
-                        name="semestre"
+                        name="semester"
                         autoComplete="off"
-                        value={formValues.semestre}
+                        value={formValues.semester}
                         onChange={onInputChange}
                     />
                     {/* <small id="emailHelp" className="form-text text-muted">Asignatura a programar</small> */}
@@ -158,9 +158,9 @@ export const CalendarModal = () => {
                         type="text"
                         className="form-control"
                         placeholder="Grupo"
-                        name="grupo"
+                        name="group"
                         autoComplete="off"
-                        value={formValues.grupo}
+                        value={formValues.group}
                         onChange={onInputChange}
                     />
                     {/* <small id="emailHelp" className="form-text text-muted">Asignatura a programar</small> */}
@@ -171,9 +171,9 @@ export const CalendarModal = () => {
                         type="text"
                         className="form-control"
                         placeholder="Docente"
-                        name="docente"
+                        name="teacher"
                         autoComplete="off"
-                        value={formValues.docente}
+                        value={formValues.teacher}
                         onChange={onInputChange}
                     />
                     {/* <small id="emailHelp" className="form-text text-muted">Asignatura a programar</small> */}

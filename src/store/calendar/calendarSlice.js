@@ -6,10 +6,14 @@ const tempEvent = {
     _id: new Date().getTime(),
     start: new Date(),
     end: addHours(new Date(), 2),
-    asignatura: 'Fisiología del ejercicio',
-    semestre: '3',
-    grupo: '301',
-    docente: 'Cristian Peña'
+    course: 'Fisiología del ejercicio',
+    semester: '3',
+    group: '301',
+    teacher: 'Cristian Peña',
+    user: {
+        _id: '123',
+        name: 'Cristian'
+    }
 }
 
 export const calendarSlice = createSlice({

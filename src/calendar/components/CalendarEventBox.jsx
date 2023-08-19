@@ -1,12 +1,12 @@
 import React from 'react'
 
 export const CalendarEventBox = ({ event }) => {
-    const { asignatura, docente, grupo } = event
+    const { course, teacher, group } = event
     return (
         <>
-            <span>{grupo}</span>
-            <strong> - {asignatura}</strong>
-            <span> - {docente}</span>
+            <span>{group}</span>
+            <strong> - {course}</strong>
+            <span> - {teacher}</span>
         </>
     )
 }
