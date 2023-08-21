@@ -19,7 +19,6 @@ export const useAuthStore = () => {
             setTimeout(() => {
                 dispatch(clearErrorMessage())
             }, 10)
-
         }
     }
 
