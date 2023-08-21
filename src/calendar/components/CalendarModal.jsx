@@ -137,7 +137,6 @@ export const CalendarModal = () => {
                         value={formValues.course}
                         onChange={onInputChange}
                     />
-                    {/* <small id="emailHelp" className="form-text text-muted">Asignatura a programar</small> */}
                 </div>
                 <div className="form-group mb-2">
                     <label>Semestre</label>
@@ -150,7 +149,6 @@ export const CalendarModal = () => {
                         value={formValues.semester}
                         onChange={onInputChange}
                     />
-                    {/* <small id="emailHelp" className="form-text text-muted">Asignatura a programar</small> */}
                 </div>
                 <div className="form-group mb-2">
                     <label>Grupo</label>
@@ -163,7 +161,6 @@ export const CalendarModal = () => {
                         value={formValues.group}
                         onChange={onInputChange}
                     />
-                    {/* <small id="emailHelp" className="form-text text-muted">Asignatura a programar</small> */}
                 </div>
                 <div className="form-group mb-2">
                     <label>Docente</label>
@@ -176,19 +173,7 @@ export const CalendarModal = () => {
                         value={formValues.teacher}
                         onChange={onInputChange}
                     />
-                    {/* <small id="emailHelp" className="form-text text-muted">Asignatura a programar</small> */}
                 </div>
-
-                {/* <div className="form-group mb-2">
-                    <textarea
-                        type="text"
-                        className="form-control"
-                        placeholder="Notas"
-                        rows="5"
-                        name="notes"
-                    ></textarea>
-                    <small id="emailHelp" className="form-text text-muted">Información adicional</small>
-                </div> */}
 
                 <button
                     type="submit"

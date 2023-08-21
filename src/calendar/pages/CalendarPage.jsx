@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { useUiStore, useCaledarStore } from '../../hooks'
+import { useEffect, useState } from 'react'
+import { useUiStore, useCaledarStore, useAuthStore } from '../../hooks'
 import { Calendar } from 'react-big-calendar'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import { localizer, getMessagesES } from '../../helpers'
@@ -8,15 +8,16 @@ import { Navbar, CalendarEventBox, CalendarModal, FabAddNew, FabDelete } from ".
 
 
 export const CalendarPage = () => {
-
+    const { user } = useAuthStore()
     const { openDateModal } = useUiStore()
-    const { events, setActiveEvent, hasEventSelected } = useCaledarStore()
+    const { events, setActiveEvent, hasEventSelected, startLoadingEvents } = useCaledarStore()
 
     const [lastView, setlastView] = useState(localStorage.getItem('lastView') || 'week') // esto también lo puedo quitar... también buscar la forma de ocultar el header 
 
     const eventPropGetter = (event, start, end, isSelected) => {
+        const isMyEvent = (user.uid === event.user._id) || (user.uid === event.user.uid)
         const style = {
-            backgroundColor: '#347CF7',
+            backgroundColor: isMyEvent ? '#347CF7' : '#455660',
             borderRadius: '3px',
             opacity: 0.8,
             color: 'white',
@@ -40,6 +41,9 @@ export const CalendarPage = () => {
         setlastView(event)
     }
 
+    useEffect(() => {
+        startLoadingEvents()
+    }, [])
 
     return (
         <>
