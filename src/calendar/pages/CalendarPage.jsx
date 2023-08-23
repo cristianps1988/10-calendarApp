@@ -65,6 +65,7 @@ export const CalendarPage = () => {
                 onDoubleClickEvent={onDoubleClick}
                 onSelectEvent={onSelected}
                 onView={onViewChanged}
+                toolbar={false}
             />
             <CalendarModal />
             <FabAddNew />
