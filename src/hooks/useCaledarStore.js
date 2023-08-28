@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux"
-import { onSetActiveEvent, onAddNewEvent, onUpdateEvent, onDeleteEvent, onLoadEvents } from "../store"
+import { onSetActiveEvent, onAddNewEvent, onUpdateEvent, onDeleteEvent, onLoadEvents, onLoadTeachers } from "../store"
 import calendarApi from "../api/calendarApi"
 import { convertDates } from "../helpers"
 import Swal from "sweetalert2"
@@ -8,7 +8,7 @@ import Swal from "sweetalert2"
 export const useCaledarStore = () => {
 
     const dispatch = useDispatch()
-    const { events, activeEvent } = useSelector(state => state.calendar)
+    const { events, activeEvent, teachers } = useSelector(state => state.calendar)
     const { user } = useSelector(state => state.auth)
 
     const setActiveEvent = (calendarEvent) => {
@@ -27,7 +27,6 @@ export const useCaledarStore = () => {
             const { data } = await calendarApi.post('/events', calendarEvent)
             dispatch(onAddNewEvent({ ...calendarEvent, id: data.event.id, user }))
         } catch (error) {
-            console.log(error)
             Swal.fire('Ups... something went wrong', error.response.data?.msg, 'error')
         }
     }
@@ -53,10 +52,20 @@ export const useCaledarStore = () => {
         }
     }
 
+    const startLoadingTeachers = async () => {
+        try {
+            const { data } = await calendarApi.get('/teacher')
+            dispatch(onLoadTeachers(data.teachers))
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
 
     return {
         // properties
         events,
+        teachers,
         activeEvent,
         hasEventSelected: !!activeEvent,
 
@@ -64,6 +73,7 @@ export const useCaledarStore = () => {
         setActiveEvent,
         startSavingEvent,
         startDeletingEvent,
-        startLoadingEvents
+        startLoadingEvents,
+        startLoadingTeachers
     }
 }

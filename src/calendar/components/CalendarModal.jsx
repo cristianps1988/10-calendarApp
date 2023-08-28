@@ -28,7 +28,7 @@ Modal.setAppElement('#root');
 export const CalendarModal = () => {
 
     const { isDateModalOpen, closeDateModal } = useUiStore()
-    const { activeEvent, startSavingEvent } = useCaledarStore()
+    const { teachers, activeEvent, startSavingEvent, startLoadingTeachers } = useCaledarStore()
 
     const [formValues, setformValues] = useState({
         start: new Date(),
@@ -45,6 +45,10 @@ export const CalendarModal = () => {
         }
 
     }, [activeEvent])
+
+    useEffect(() => {
+        startLoadingTeachers()
+    }, [])
 
 
     const onInputChange = ({ target }) => {
@@ -79,6 +83,9 @@ export const CalendarModal = () => {
         await startSavingEvent(formValues)
         closeDateModal()
     }
+
+
+
 
     return (
 
@@ -164,7 +171,7 @@ export const CalendarModal = () => {
                 </div>
                 <div className="form-group mb-2">
                     <label>Docente</label>
-                    <input
+                    {/* <input
                         type="text"
                         className="form-control"
                         placeholder="Docente"
@@ -172,7 +179,20 @@ export const CalendarModal = () => {
                         autoComplete="off"
                         value={formValues.teacher}
                         onChange={onInputChange}
-                    />
+                    /> */}
+                    <select
+                        name='teacher'
+                        value={formValues.teacher}
+                        onChange={onInputChange}
+                        className='form-control'>
+                        defaultValue={formValues.teacher}
+                        <option disabled value='' >Elegir docente</option>
+                        {
+                            teachers.map(element => (
+                                <option key={element.id} value={element.name}>{element.name} </option>
+                            ))
+                        }
+                    </select>
                 </div>
 
                 <button

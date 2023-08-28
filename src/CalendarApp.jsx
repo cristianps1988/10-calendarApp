@@ -3,10 +3,10 @@ import { AppRouter } from "./router"
 
 export const CalendarApp = () => {
     return (
-        // <BrowserRouter>
-        <HashRouter>
+        <BrowserRouter>
+            {/* <HashRouter> */}
             <AppRouter />
-        </HashRouter>
-        // </BrowserRouter>
+            {/* </HashRouter> */}
+        </BrowserRouter>
     )
 }

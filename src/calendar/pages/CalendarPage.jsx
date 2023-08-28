@@ -66,6 +66,8 @@ export const CalendarPage = () => {
                 onSelectEvent={onSelected}
                 onView={onViewChanged}
                 toolbar={false}
+                step={15}
+
             />
             <CalendarModal />
             <FabAddNew />
