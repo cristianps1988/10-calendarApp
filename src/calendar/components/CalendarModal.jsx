@@ -9,6 +9,7 @@ import Swal from 'sweetalert2';
 
 import { useUiStore } from '../../hooks/useUiStore';
 import { useCaledarStore } from '../../hooks';
+import { useEventFormStore } from '../../hooks/useEventFormStore';
 
 registerLocale('es', es)
 
@@ -23,12 +24,19 @@ const customStyles = {
     },
 };
 
+
 Modal.setAppElement('#root');
 
 export const CalendarModal = () => {
+    const totalSemesters = 8 // este número debe venir del formulario de configuración
+    let semesters = []
+    for (let i = 1; i <= totalSemesters; i++) {
+        semesters.push(<option key={i} value={i}>{i}</option>)
+    }
 
     const { isDateModalOpen, closeDateModal } = useUiStore()
-    const { teachers, activeEvent, startSavingEvent, startLoadingTeachers } = useCaledarStore()
+    const { activeEvent, startSavingEvent } = useCaledarStore()
+    const { teachers, courses, groups, startLoadingCourses, startLoadingTeachers, startLoadingGroups } = useEventFormStore()
 
     const [formValues, setformValues] = useState({
         start: new Date(),
@@ -50,6 +58,13 @@ export const CalendarModal = () => {
         startLoadingTeachers()
     }, [])
 
+    useEffect(() => {
+        startLoadingCourses()
+    }, [])
+
+    useEffect(() => {
+        startLoadingGroups()
+    }, [formValues.semester])
 
     const onInputChange = ({ target }) => {
         setformValues({
@@ -65,13 +80,13 @@ export const CalendarModal = () => {
         })
     }
 
-
     const onCloseModal = () => {
         closeDateModal()
     }
 
     const onSubmit = async (event) => {
         event.preventDefault()
+        console.log(formValues)
         const diference = differenceInSeconds(formValues.end, formValues.start)
         if (isNaN(diference) || diference <= 0) {
             Swal.fire('Fechas incorrectas', 'Revise las fechas ingresadas', 'error')
@@ -83,9 +98,6 @@ export const CalendarModal = () => {
         await startSavingEvent(formValues)
         closeDateModal()
     }
-
-
-
 
     return (
 
@@ -135,31 +147,54 @@ export const CalendarModal = () => {
                 <hr />
                 <div className="form-group mb-2">
                     <label>Asignatura</label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Asignatura"
-                        name="course"
-                        autoComplete="off"
+                    <select
+                        name='course'
                         value={formValues.course}
                         onChange={onInputChange}
-                    />
+                        className='form-control'>
+                        defaultValue={formValues.course}
+                        <option disabled value='' >Elegir asignatura</option>
+                        {
+                            courses.map(element => (
+                                <option key={element.id} value={element.course}>{element.course} </option>
+                            ))
+                        }
+                    </select>
                 </div>
                 <div className="form-group mb-2">
                     <label>Semestre</label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Semestre"
-                        name="semester"
-                        autoComplete="off"
+                    <select
+                        name='semester'
                         value={formValues.semester}
                         onChange={onInputChange}
-                    />
+                        className='form-control'>
+                        defaultValue={formValues.semester}
+                        <option disabled value='' >Elegir semestre</option>
+                        {semesters}
+                    </select>
                 </div>
                 <div className="form-group mb-2">
                     <label>Grupo</label>
-                    <input
+                    <select
+                        name='group'
+                        value={formValues.group}
+                        onChange={onInputChange}
+                        className='form-control'>
+                        defaultValue={formValues.group}
+                        <option disabled value='' >Elegir grupo</option>
+                        {
+                            groups.map(element => {
+                                let semesterChosed = formValues.semester
+                                console.log(semesterChosed)
+                                console.log(element.semester)
+                                if (semesterChosed == element.semester) {
+                                    <option key={element.id} value={element.group}>{element.group} </option>
+                                }
+                            }
+                            )
+                        }
+                    </select>
+                    {/* <input
                         type="text"
                         className="form-control"
                         placeholder="Grupo"
@@ -167,19 +202,10 @@ export const CalendarModal = () => {
                         autoComplete="off"
                         value={formValues.group}
                         onChange={onInputChange}
-                    />
+                    /> */}
                 </div>
                 <div className="form-group mb-2">
                     <label>Docente</label>
-                    {/* <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Docente"
-                        name="teacher"
-                        autoComplete="off"
-                        value={formValues.teacher}
-                        onChange={onInputChange}
-                    /> */}
                     <select
                         name='teacher'
                         value={formValues.teacher}

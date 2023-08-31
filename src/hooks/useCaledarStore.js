@@ -8,7 +8,7 @@ import Swal from "sweetalert2"
 export const useCaledarStore = () => {
 
     const dispatch = useDispatch()
-    const { events, activeEvent, teachers } = useSelector(state => state.calendar)
+    const { events, activeEvent } = useSelector(state => state.calendar)
     const { user } = useSelector(state => state.auth)
 
     const setActiveEvent = (calendarEvent) => {
@@ -52,20 +52,9 @@ export const useCaledarStore = () => {
         }
     }
 
-    const startLoadingTeachers = async () => {
-        try {
-            const { data } = await calendarApi.get('/teacher')
-            dispatch(onLoadTeachers(data.teachers))
-        } catch (error) {
-            console.log(error)
-        }
-    }
-
-
     return {
         // properties
         events,
-        teachers,
         activeEvent,
         hasEventSelected: !!activeEvent,
 
@@ -74,6 +63,5 @@ export const useCaledarStore = () => {
         startSavingEvent,
         startDeletingEvent,
         startLoadingEvents,
-        startLoadingTeachers
     }
 }

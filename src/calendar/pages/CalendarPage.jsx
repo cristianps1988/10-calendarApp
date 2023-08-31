@@ -48,27 +48,45 @@ export const CalendarPage = () => {
     return (
         <>
             <Navbar />
+            <div className='d-flex flex-row align-items-baseline'>
+                <div className='d-flex flex-column p-2'>
+                    <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">Botón</button>
+                    <button className='w-full'>Botón</button>
+                    <button className='w-full'>Botón</button>
+                    <button className='w-full'>Botón</button>
+                    <button className='w-full'>Botón</button>
+                </div>
+                <Calendar
+                    className='flex-grow-1'
+                    culture='es'
+                    localizer={localizer}
+                    events={events}
+                    defaultView={lastView}
+                    startAccessor="start"
+                    endAccessor="end"
+                    style={{ height: 'calc(100vh - 80px)' }}
+                    messages={getMessagesES()}
+                    eventPropGetter={eventPropGetter}
+                    components={{
+                        event: CalendarEventBox
+                    }}
+                    onDoubleClickEvent={onDoubleClick}
+                    onSelectEvent={onSelected}
+                    onView={onViewChanged}
+                    toolbar={false}
+                    step={15}
+                />
+            </div>
+            <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Backdrop with scrolling</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <p>Try scrolling the rest of the page to see this option in action.</p>
+                </div>
+            </div>
 
-            <Calendar
-                culture='es'
-                localizer={localizer}
-                events={events}
-                defaultView={lastView}
-                startAccessor="start"
-                endAccessor="end"
-                style={{ height: 'calc(100vh - 80px)' }}
-                messages={getMessagesES()}
-                eventPropGetter={eventPropGetter}
-                components={{
-                    event: CalendarEventBox
-                }}
-                onDoubleClickEvent={onDoubleClick}
-                onSelectEvent={onSelected}
-                onView={onViewChanged}
-                toolbar={false}
-                step={15}
-
-            />
             <CalendarModal />
             <FabAddNew />
             {hasEventSelected && <FabDelete />}

@@ -4,9 +4,7 @@ export const calendarSlice = createSlice({
     name: 'calendar',
     initialState: {
         isLoadingEvents: true,
-        isLoadingTeachers: true,
         events: [],
-        teachers: [],
         activeEvent: null,
     },
     reducers: {
@@ -40,15 +38,7 @@ export const calendarSlice = createSlice({
                     }
                 })
         },
-        onLoadTeachers: (state, { payload = [] }) => {
-            state.isLoadingTeachers = false,
-                payload.forEach(teacher => {
-                    const exist = state.teachers.some(dbTeacher => dbTeacher.id === teacher.id)
-                    if (!exist) {
-                        state.teachers.push(teacher)
-                    }
-                })
-        },
+
         onLogoutCalendar: (state) => {
             state.isLoadingEvents = true,
                 state.events = [],
@@ -56,4 +46,4 @@ export const calendarSlice = createSlice({
         }
     }
 });
-export const { onSetActiveEvent, onAddNewEvent, onUpdateEvent, onDeleteEvent, onLoadEvents, onLoadTeachers, onLogoutCalendar } = calendarSlice.actions;
+export const { onSetActiveEvent, onAddNewEvent, onUpdateEvent, onDeleteEvent, onLoadEvents, onLogoutCalendar } = calendarSlice.actions;
