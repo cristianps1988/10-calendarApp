@@ -64,7 +64,7 @@ export const CalendarModal = () => {
 
     useEffect(() => {
         startLoadingGroups()
-    }, [formValues.semester])
+    }, [])
 
     const onInputChange = ({ target }) => {
         setformValues({
@@ -183,26 +183,11 @@ export const CalendarModal = () => {
                         defaultValue={formValues.group}
                         <option disabled value='' >Elegir grupo</option>
                         {
-                            groups.map(element => {
-                                let semesterChosed = formValues.semester
-                                console.log(semesterChosed)
-                                console.log(element.semester)
-                                if (semesterChosed == element.semester) {
-                                    <option key={element.id} value={element.group}>{element.group} </option>
-                                }
-                            }
-                            )
+                            groups.map(e => (
+                                <option key={e.id} value={e.group}>{e.group}</option>
+                            ))
                         }
                     </select>
-                    {/* <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Grupo"
-                        name="group"
-                        autoComplete="off"
-                        value={formValues.group}
-                        onChange={onInputChange}
-                    /> */}
                 </div>
                 <div className="form-group mb-2">
                     <label>Docente</label>
